@@ -313,6 +313,9 @@ void Cvar_Set (cvar_t *var, char *value)
 			return;
 	}
 
+	if ((var->string && strcmp(var->string, value)) || (var->defaultvalue && strcmp(var->defaultvalue, value)))
+		var->modified = true;
+
 	// dup string first (before free) since 'value' and 'var->string' can point at the same memory area.
 	new_val = Z_Strdup (value);
 	// free the old value string.
@@ -322,7 +325,6 @@ void Cvar_Set (cvar_t *var, char *value)
 	var->value = Q_atof (var->string);
 	var->integer = Q_atoi (var->string);
 	StringToRGB_W(var->string, var->color);
-	var->modified = true;
 
 #ifndef CLIENTONLY
 	if (var->flags & CVAR_SERVERINFO)
@@ -563,7 +565,9 @@ void Cvar_Register (cvar_t *var)
 	var->value = Q_atof (var->string);
 	var->integer = Q_atoi (var->string);
 	StringToRGB_W(var->string, var->color);
-	var->modified = true;
+
+	if (strcmp(var->defaultvalue, var->string))
+		var->modified = true;
 
 	// link the variable in
 	key = Com_HashKey (var->name) % VAR_HASHPOOL_SIZE;
@@ -1307,6 +1311,23 @@ void Cvar_CleanUpTempVars (void)
 		if (var->flags & CVAR_TEMP)
 			Cvar_Delete (var->name);
 	}
+}
+
+/*
+============
+Cvar_WriteVariables
+
+Writes lines containing "set variable value" for all variables
+with the archive flag set to true.
+============
+*/
+void Cvar_WriteVariables (FILE *f) 
+{
+	cvar_t  *var;
+    
+	for (var = cvar_vars ; var ; var = var->next)
+		if (var->modified && !(var->flags & CVAR_ROM))
+			fprintf (f, "%s \"%s\"\n", var->name, var->string);
 }
 
 void Cvar_Init (void)
