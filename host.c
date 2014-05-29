@@ -566,6 +566,7 @@ void Host_Init (int argc, char **argv, int default_memsize)
 
 	FS_InitFilesystem ();
 	NET_Init ();
+	TMenu_Init ();
 
 	Commands_For_Configs_Init ();
 	Host_LoadConfiguration ();

@@ -2059,6 +2059,16 @@ void Key_EventEx (int key, wchar unichar, qbool down)
         M_ToggleMenu_f();
     }
 
+	if (key >= '0' && key <= '9' && TMenu_IsOpen() && key_dest == key_game)
+	{
+		if (!down)
+		{
+			snprintf(cmd, sizeof(cmd), "tmenuselect %d\n", key - 48);
+			Cbuf_AddText(cmd);
+		}
+		return;
+	}
+
 	if (!down)
 	{
 		// Key up event.

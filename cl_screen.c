@@ -3278,6 +3278,7 @@ void SCR_DrawElements(void)
 						SCR_DrawDemoClock ();
 						SCR_DrawQTVBuffer ();
 						SCR_DrawFPS ();
+						TMenu_Draw ();
 					}
 
 					// QW262
