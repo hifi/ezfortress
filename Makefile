@@ -193,6 +193,7 @@ OBJS_c := \
     cl_tent.o \
     cl_view.o \
     cl_tmenu.o \
+    cl_easymove.o \
     common_draw.o \
     console.o \
     demo_controls.o \

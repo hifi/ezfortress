@@ -65,6 +65,7 @@ typedef struct {
 	int			numtouch;
 	int			touchindex[MAX_PHYSENTS];
 	int			groundent; // index in physents array, only valid when onground is true
+	qbool		touch_wall;
 	int			waterlevel;
 	int			watertype;
 } playermove_t;
