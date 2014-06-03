@@ -2575,6 +2575,8 @@ void CL_Frame (double time)
 	IRC_Update();
 #endif
 
+	Timer_Tick();
+
 	CL_UpdateCaption(false);
 }
 

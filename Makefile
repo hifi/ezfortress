@@ -194,6 +194,7 @@ OBJS_c := \
     cl_view.o \
     cl_tmenu.o \
     cl_easymove.o \
+    cl_timer.o \
     common_draw.o \
     console.o \
     demo_controls.o \
