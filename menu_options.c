@@ -133,8 +133,8 @@ setting settbinds_arr[] = {
 	ADDSET_BIND("switch grenade", "grenswitch"),
 
 	ADDSET_SEPARATOR("Class"),
-	ADDSET_BIND("primary special", "special1"),
-	ADDSET_BIND("secondary special", "special2"),
+	ADDSET_BIND("primary special", "+special1"),
+	ADDSET_BIND("secondary special", "+special2"),
 
 	ADDSET_SEPARATOR("Miscellaneous"),
 	ADDSET_BIND("take screenshot", "screenshot"),
