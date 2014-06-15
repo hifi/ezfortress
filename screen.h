@@ -125,7 +125,6 @@ typedef struct ti_player_s {
 
 void Update_TeamInfo(void);
 char *SCR_GetWeaponShortNameByFlag (int flag);
-qbool SCR_TF_Sbar(const char *);
 
 // end - scr_teaminfo
 
