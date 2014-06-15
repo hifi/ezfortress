@@ -96,6 +96,8 @@ cvar_t vid_width              = {"vid_width",             "0",   CVAR_LATCH };
 cvar_t vid_height             = {"vid_height",            "0",   CVAR_LATCH };
 cvar_t vid_win_width          = {"vid_win_width",         "640", CVAR_LATCH };
 cvar_t vid_win_height         = {"vid_win_height",        "480", CVAR_LATCH };
+cvar_t win_width              = {"win_width",             "0",	 CVAR_ROM };
+cvar_t win_height             = {"win_height",            "0",	 CVAR_ROM };
 
 // TODO: Move the in_* cvars
 cvar_t in_raw                 = {"in_raw",                "1",   CVAR_ARCHIVE | CVAR_SILENT, in_raw_callback};
@@ -256,6 +258,7 @@ static void window_event(SDL_WindowEvent *event)
 {
 	int flags = SDL_GetWindowFlags(sdl_window);
 	extern qbool scr_skipupdate;
+	char ibuf[32];
 
 	switch (event->event) {
 		case SDL_WINDOWEVENT_MINIMIZED:
@@ -287,6 +290,10 @@ static void window_event(SDL_WindowEvent *event)
 					Cvar_LatchedSetValue(&vid_win_width, event->data1);
 					Cvar_LatchedSetValue(&vid_win_height, event->data2);
 				}
+				snprintf(ibuf, sizeof ibuf, "%ld", glConfig.vidWidth);
+				Cvar_ForceSet(&win_width, ibuf);
+				snprintf(ibuf, sizeof ibuf, "%ld", glConfig.vidHeight);
+				Cvar_ForceSet(&win_height, ibuf);
 				if (!r_conwidth.integer || !r_conheight.integer)
 					VID_UpdateConRes();
 			}
@@ -498,6 +505,8 @@ void VID_RegisterCvars(void)
 	Cvar_Register(&r_conscale);
 	Cvar_Register(&vid_flashonactivity);
 	Cvar_Register(&r_showextensions);
+	Cvar_Register(&win_width);
+	Cvar_Register(&win_height);
 
 	Cvar_ResetCurrentGroup();
 }
@@ -505,6 +514,7 @@ void VID_RegisterCvars(void)
 static void VID_SetupResolution(void)
 {
 	SDL_DisplayMode display_mode;
+	char ibuf[32];
 
 	if (r_fullscreen.integer == 1) {
 		if ((!vid_width.integer || !vid_height.integer)) {
@@ -534,6 +544,11 @@ static void VID_SetupResolution(void)
 		glConfig.displayFrequency = 0;
 
 	}
+
+	snprintf(ibuf, sizeof ibuf, "%ld", glConfig.vidWidth);
+	Cvar_ForceSet(&win_width, ibuf);
+	snprintf(ibuf, sizeof ibuf, "%ld", glConfig.vidHeight);
+	Cvar_ForceSet(&win_height, ibuf);
 }
 
 static void VID_SDL_GL_SetupAttributes(void)
