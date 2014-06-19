@@ -91,6 +91,8 @@ f_trigger_t f_triggers[] = {
 	{"f_conc", true, true},
 	{"f_flash", true, true},
 	{"f_bonusflash", true, true},
+
+	{"f_vidmode", false, false},
 };
  
 #define num_f_triggers	(sizeof(f_triggers) / sizeof(f_triggers[0]))

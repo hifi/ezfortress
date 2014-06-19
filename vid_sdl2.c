@@ -296,6 +296,7 @@ static void window_event(SDL_WindowEvent *event)
 				Cvar_ForceSet(&win_height, ibuf);
 				if (!r_conwidth.integer || !r_conheight.integer)
 					VID_UpdateConRes();
+				TP_ExecTrigger ("f_vidmode");
 			}
 			break;
 	}
@@ -549,6 +550,7 @@ static void VID_SetupResolution(void)
 	Cvar_ForceSet(&win_width, ibuf);
 	snprintf(ibuf, sizeof ibuf, "%ld", glConfig.vidHeight);
 	Cvar_ForceSet(&win_height, ibuf);
+	TP_ExecTrigger ("f_vidmode");
 }
 
 static void VID_SDL_GL_SetupAttributes(void)
